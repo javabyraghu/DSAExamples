@@ -1,4 +1,5 @@
 package com.app.raghu.crypto;
+
 /***
  * aaabbcccddeff => encrypt => a3b2c3d2ef2
  * a3b2c3d2ef2 => decrypt => aaabbcccddeff
@@ -45,7 +46,33 @@ public class StringRepeateCharsEncryptDecrypt {
 		return sb.toString();
 	}
 
-	private static String decrypt(String string) {
-		return null;
+	private static String decrypt(String input) {
+		if(input == null || "".equals(input))
+			return "";
+		
+		StringBuffer sb = new StringBuffer();
+		int repeateCount = 0;
+		int len = input.length();
+		char letter = input.charAt(0);
+		
+		for (int i = 1; i < len; i++) {
+			char tempChar = input.charAt(i);
+			
+			if(Character.isDigit(tempChar)) {
+				repeateCount = repeateCount * 10 + Character.getNumericValue(tempChar);
+			} else {
+				if(repeateCount == 0)
+					repeateCount = 1;
+				for (int j = 0; j < repeateCount; j++) {
+					sb.append(letter);
+				}
+				repeateCount = 0;
+				letter = tempChar;
+			}
+		}
+		for (int j = 0; j < repeateCount; j++) {
+			sb.append(letter);
+		}
+		return sb.toString();
 	}
 }
